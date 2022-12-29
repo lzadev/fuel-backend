@@ -4,6 +4,7 @@ const {
   getAllFuels,
   getFuelById,
   createFuel,
+  getFuelHistory,
 } = require("../controllers/fuel.controller");
 const checkIfExistsFuel = require("../helpers/dbvalidations");
 const checkValidations = require("../middlewares/checkValidations");
@@ -19,6 +20,7 @@ router.get(
   ],
   getFuelById
 );
+router.get("/history/:codigo", getFuelHistory);
 
 router.post(
   "/",
@@ -26,9 +28,12 @@ router.post(
     check("name", "The name is required").not().isEmpty(),
     check("code", "The code is required").not().isEmpty(),
     check("currency", "The currency is required").not().isEmpty(),
-    check("price", "The price is required").not().isEmpty().not().isNumeric(),
-    check("previousPrice", "The previousPrice is required").not().isEmpty(),
-    check("date", "The date is required").not().isEmpty().not().isDate(),
+    check("price", "The price is required").not().isEmpty().isNumeric(),
+    check("previousPrice", "The previousPrice is required")
+      .not()
+      .isEmpty()
+      .isNumeric(),
+    check("date", "The date is required").not().isEmpty().isDate(),
     checkValidations,
   ],
   createFuel

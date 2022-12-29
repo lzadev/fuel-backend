@@ -4,6 +4,7 @@ const { request } = require("express");
 const { internalError } = require("../helpers/commonResponse");
 
 const Fuel = require("../models/Fuel");
+const HistoryFuel = require("../models/HistoryFuel");
 
 const getAllFuels = async (req = request, res = response) => {
   try {
@@ -19,15 +20,23 @@ const getAllFuels = async (req = request, res = response) => {
   }
 };
 
+const getFuelHistory = async (req = request, res = response) => {
+  try {
+    const { codigo } = req.params;
+
+    let fuelHistory = await HistoryFuel.find({ Codigo: codigo });
+
+    res.status(200).json({ total: fuelHistory.length, data: fuelHistory });
+  } catch (error) {
+    console.log("Error getting all fuels", error);
+    internalError(res);
+  }
+};
+
 const getFuelById = async (req = request, res = response) => {
   try {
     const { id } = req.params;
     const fuel = await Fuel.findById({ _id: id });
-
-    // if (!fuel) {
-    //   notFound(res, id);
-    // }
-
     return res.status(200).json({ total: 1, data: fuel });
   } catch (error) {
     console.log("Error getting all cities", error);
@@ -37,7 +46,8 @@ const getFuelById = async (req = request, res = response) => {
 
 const createFuel = async (req = request, res = response) => {
   try {
-    const { name, code, currency, price, previousPrice, date } = req.body;
+    const { name, code, currency, price, previousPrice, date, iconPath } =
+      req.body;
     const newFuel = new Fuel({
       name,
       code,
@@ -45,6 +55,7 @@ const createFuel = async (req = request, res = response) => {
       price,
       previousPrice,
       date,
+      iconPath,
     });
 
     await newFuel.save();
@@ -55,4 +66,4 @@ const createFuel = async (req = request, res = response) => {
   }
 };
 
-module.exports = { getAllFuels, getFuelById, createFuel };
+module.exports = { getAllFuels, getFuelById, createFuel, getFuelHistory };

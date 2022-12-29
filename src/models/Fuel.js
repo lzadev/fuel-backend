@@ -7,6 +7,7 @@ const FuelSchema = Schema({
   price: Number,
   previousPrice: Number,
   date: Date,
+  iconPath: String,
 });
 
 FuelSchema.methods.toJSON = function () {
