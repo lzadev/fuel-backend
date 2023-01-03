@@ -1,14 +1,15 @@
 const { model, Schema } = require("mongoose");
 
 const HistoryFuelSchema = Schema({
-  Nombre: String,
-  Codigo: String,
-  Precio: Number,
-  SemanaInicio: String,
-  SemanaFin: String,
-  MesInicio: String,
-  MesFin: String,
-  Anio: String,
+  name: String,
+  code: String,
+  price: Number,
+  startweek: String,
+  endweek: String,
+  startmonth: String,
+  endmonth: String,
+  year: String,
+  startdate: Date,
 });
 
 HistoryFuelSchema.methods.toJSON = function () {
@@ -19,4 +20,4 @@ HistoryFuelSchema.methods.toJSON = function () {
   return fuelHistory;
 };
 
-module.exports = model("HistoryFuel", HistoryFuelSchema);
+module.exports = model("HistoryFuelsDate", HistoryFuelSchema);

@@ -4,7 +4,6 @@ const { request } = require("express");
 const { internalError } = require("../helpers/commonResponse");
 
 const Fuel = require("../models/Fuel");
-const HistoryFuel = require("../models/HistoryFuel");
 
 const getAllFuels = async (req = request, res = response) => {
   try {
@@ -14,19 +13,6 @@ const getAllFuels = async (req = request, res = response) => {
     ]);
 
     res.status(200).json({ total, data: fuels });
-  } catch (error) {
-    console.log("Error getting all fuels", error);
-    internalError(res);
-  }
-};
-
-const getFuelHistory = async (req = request, res = response) => {
-  try {
-    const { codigo } = req.params;
-
-    let fuelHistory = await HistoryFuel.find({ Codigo: codigo });
-
-    res.status(200).json({ total: fuelHistory.length, data: fuelHistory });
   } catch (error) {
     console.log("Error getting all fuels", error);
     internalError(res);
@@ -66,4 +52,4 @@ const createFuel = async (req = request, res = response) => {
   }
 };
 
-module.exports = { getAllFuels, getFuelById, createFuel, getFuelHistory };
+module.exports = { getAllFuels, getFuelById, createFuel };

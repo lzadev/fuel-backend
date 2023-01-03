@@ -20,7 +20,6 @@ router.get(
   ],
   getFuelById
 );
-router.get("/history/:codigo", getFuelHistory);
 
 router.post(
   "/",

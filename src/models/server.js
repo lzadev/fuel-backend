@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const fuelRouter = require("../routes/fuel.routes");
+const fuelHistoryRouter = require("../routes/fuel_history.routes");
 const connect = require("../database/mongoConnection");
 class Server {
   constructor() {
@@ -11,6 +12,7 @@ class Server {
 
   routes() {
     this.app.use("/api/fuels", fuelRouter);
+    this.app.use("/api/fuels/history", fuelHistoryRouter);
   }
 
   middlewares() {
