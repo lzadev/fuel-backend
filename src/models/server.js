@@ -24,7 +24,7 @@ class Server {
     try {
       const port = process.env.PORT || "3000";
 
-      await connect("mongodb+srv://lzabala:Luis****@nodeexpressprojects.jaidr.mongodb.net/fueldb?retryWrites=true&w=majorityS");
+      await connect(process.env.MONGO_URI || "");
       this.app.listen(port, () => {
         console.log(`The server is running on port ${port}`);
       });
