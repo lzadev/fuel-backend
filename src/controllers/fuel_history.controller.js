@@ -17,7 +17,7 @@ const getFuelHistory = async (req = request, res = response) => {
       query.year = year;
     }
 
-    let fuelHistory = await HistoryFuel.find(query);
+    let fuelHistory = await HistoryFuel.find(query).sort({startdate:-1});
 
     res.status(200).json({ total: fuelHistory.length, data: fuelHistory });
   } catch (error) {
